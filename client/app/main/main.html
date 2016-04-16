@@ -1,31 +1,70 @@
 <div ng-controller="SearchController">
 <header class="hero-unit" id="banner">
   <div class="container">
-    <h1>Night Clubs</h1>
+
+    <h1 class="appTitle">Night Clubs</h1>
+  </br>
     <p class="lead">Find Night Clubs Near You</p>
-    </br></br>
+  </br></br></br>
     <label for="destinationField">Enter Your Location</label>
+    <form ng-submit="search()">
     <div class="col-lg-6 col-centered">
       <div class="input-group">
+
         <input type="text" class="form-control" id="destination" placeholder="My Location"
         ng-model="location">
         <span class="input-group-btn">
-          <button class="btn btn-success" type="button" ng-click="search()">Search!</button>
+          <input type="submit" class="btn btn-success" value="Search!">
         </span>
+
       </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
+  </form>
 
   </div>
 </header>
-</div>
+</br></br>
+        <div class="row">
+          <div class="col-md-8"></div>
+          <div class="paginationDiv col-md-4">
 
-<div class="container">
+            <dir-pagination-controls
+            template-url='bower_components/angularUtils-pagination/dirPagination.tpl.html'></dir-pagination-controls>
+          </div>
+        </div>
+          <div class="container">
+
+
+        <div dir-paginate="club in clubs | itemsPerPage:9">
+
+            <div class="clubDiv">
+              <a ng-href={{club.url}} style="text-decoration: none; color: black">
+              <img class="clubImg" ng-src="{{club.image_url}}" />
+              <div class="clubName">{{club.name}}</div>
+              </a>
+              <div>{{club.location.display_address[0]}}</div>
+              <div>{{club.location.display_address[1]}}</div>
+              <div>{{club.location.display_address[2]}}</div>
+              <div>{{club.display_phone}}</div>
+
+            </div>
+
+        </div>
+  </div>
   <div class="row">
-    <div class="col-lg-12">
+    <div class="col-md-8"></div>
+    <div class="paginationDiv col-md-4">
+
+      <dir-pagination-controls
+      template-url='bower_components/angularUtils-pagination/dirPagination.tpl.html'></dir-pagination-controls>
     </div>
   </div>
+ </div>
 </div>
 
+<!--
+
+-->
 <!--
 <div class="container">
   <div class="row">

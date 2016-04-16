@@ -1,29 +1,30 @@
 'use strict'
 
 angular.module('nightclubApp')
-  .factory('searchFactory', ['$http', function($http){
+  .factory('searchFactory', ['$http',function($http){
     var savedLocation;
     var location = {};
-    location.saveLocation = function(location){
-      if (location !== null || location !== ''){
-        savedLocation = location;
-        var config = {
-              params: {
-                    location: savedLocation
-              }
-          }
 
-        $http.get('/yelp', config)
-        .success(function(res){  console.log(res);})
-        .error(function(err){ });
+    var noClubFound = false;
+    var clubObject = {};
+    var selectedClubs = [];
+    var savedClubs = [];
+
+
+    location.saveClubs = function(clubs){
+      savedClubs = clubs;
     }
 
-    }
+  
 
     location.getLocation = function(){
       return savedLocation;
     }
 
+    location.getClubs = function(){
+
+      return savedClubs;
+    }
 
     return location;
   }]);

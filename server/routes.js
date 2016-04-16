@@ -30,10 +30,10 @@ export default function(app) {
 
   app.get('/yelp', function(req, res){
 
-    console.log(req);
-    yelp.search({category_filter: 'nightlife', limit: 20, sort: 1, location: req.query.location}).
+    var location = req.query.location;
+    
+    yelp.search({category_filter: 'nightlife', limit: 20, sort: 1, location: location}).
     then(function(data) {
-      console.log('hihi');
       res.json(data.businesses);
     }).catch(function(err){
       console.log(err);

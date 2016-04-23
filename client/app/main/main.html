@@ -24,6 +24,8 @@
   </div>
 </header>
 </br></br>
+
+
         <div class="row">
           <div class="col-md-8"></div>
           <div class="paginationDiv col-md-4">
@@ -35,7 +37,7 @@
           <div class="container">
 
 
-        <div dir-paginate="club in clubs | itemsPerPage:9">
+        <div dir-paginate="club in clubs | itemsPerPage:15">
 
             <div class="clubDiv">
               <a ng-href={{club.url}} style="text-decoration: none; color: black">
@@ -46,6 +48,10 @@
               <div>{{club.location.display_address[1]}}</div>
               <div>{{club.location.display_address[2]}}</div>
               <div>{{club.display_phone}}</div>
+              <div ng-show="auth">
+                  <button type="button" class="btn btn-primary">Join</button>
+              </div>
+            </div>
 
             </div>
 

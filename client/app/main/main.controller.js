@@ -8,18 +8,19 @@ class MainController {
     this.$http = $http;
     this.socket = socket;
     this.awesomeThings = [];
+    
 
     $scope.$on('$destroy', function() {
       socket.unsyncUpdates('thing');
     });
   }
 
-  $onInit() {
+  /*$onInit() {
     this.$http.get('/api/things').then(response => {
       this.awesomeThings = response.data;
       this.socket.syncUpdates('thing', this.awesomeThings);
     });
-  }
+  }*/
 
   addThing() {
     if (this.newThing) {

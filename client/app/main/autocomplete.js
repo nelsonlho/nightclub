@@ -8,9 +8,6 @@ function initializeAutocomplete(id) {
 
 function onPlaceChanged() {
   var place = this.getPlace();
-  //console.log(place);  // Uncomment this line to view the full object returned by Google API.
-  //console.log(place.geometry.access_points[0].location.lat) //latitude
-  //console.log(place.geometry.access_points[0].location.lng) //longitude
   for (var i in place.address_components) {
     var component = place.address_components[i];
     for (var j in component.types) {  // Some types are ["country", "political"]
@@ -20,8 +17,6 @@ function onPlaceChanged() {
       }
     }
   }
-  //document.getElementById('lat').innerHTML = lat;
-  //document.getElementById('lng').innerHTML = lng;
 }
 
 google.maps.event.addDomListener(window, 'load', function() {

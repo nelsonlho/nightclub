@@ -8,31 +8,27 @@ import errors from './components/errors';
 import path from 'path';
 
 var Yelp = require('yelp');
-var secrets = require('./config/local.env');
-var yelpConsumerKey = secrets.YELP_KEY;
-var yelpConsumerSecret = secrets.YELP_SECRET;
-var yelpToken = secrets.YELP_TOKEN;
-var yelpTokenSecret = secrets.YELP_TOKEN_SECRET;
+
 
 var yelp = new Yelp({
-  consumer_key: yelpConsumerKey,
-  consumer_secret: yelpConsumerSecret,
-  token: yelpToken,
-  token_secret: yelpTokenSecret,
+  consumer_key: process.env.YELP_KEY,
+  consumer_secret: process.env.YELP_SECRET,
+  token: process.env.YELP_TOKEN,
+  token_secret: process.env.YELP_TOKEN_SECRET,
 });
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/clubs', require('./api/club'));
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
-
   app.use('/auth', require('./auth').default);
 
   app.get('/yelp', function(req, res){
 
     var location = req.query.location;
-    
-    yelp.search({category_filter: 'nightlife', limit: 20, sort: 1, location: location}).
+
+    yelp.search({category_filter: 'nightlife', sort: 1, location: location}).
     then(function(data) {
       res.json(data.businesses);
     }).catch(function(err){

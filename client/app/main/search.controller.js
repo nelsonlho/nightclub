@@ -1,11 +1,10 @@
 'use strict'
 
 angular.module('nightclubApp')
-  .controller('SearchController', ['$scope', '$http', 'searchFactory', function($scope, $http, searchFactory){
-
+  .controller('SearchController', ['$scope', '$http', 'searchFactory', 'Auth', function($scope, $http, searchFactory, Auth){
+    $scope.auth = Auth.isLoggedIn;
     $scope.location;
     $scope.clubs = searchFactory.getClubs();
-    console.log($scope.clubs);
     $scope.search = function(){
       var queryLocation = $scope.location;
       var config = {
@@ -17,12 +16,5 @@ angular.module('nightclubApp')
         $scope.clubs = res;
         searchFactory.saveClubs($scope.clubs);
       });
-      //$scope.clubs = searchFactory.searchClubs($scope.location);
-
-      //$timeout( function(){ $scope.clubs = searchFactory.getClubs() }, 10000);
     }
-
-
-
-
-  }]);
+}]);

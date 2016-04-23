@@ -2,9 +2,23 @@
 
 angular.module('nightclubApp')
   .controller('SearchController', ['$scope', '$http', 'searchFactory', 'Auth', function($scope, $http, searchFactory, Auth){
-    $scope.auth = Auth.isLoggedIn;
+    $scope.isLoggedIn = Auth.isLoggedIn();
+    $scope.user = Auth.getCurrentUser();
     $scope.location;
     $scope.clubs = searchFactory.getClubs();
+
+    $scope.showButton = function(club){
+        if(!$scope.isLoggedIn){
+          return false;
+        }
+        if(!club.usersJoining){ return true; }
+        if(club.usersJoining.indexOf($scope.user._id) !== -1){//user joined already.
+          return false;
+        }
+
+        return true;
+    }
+
     $scope.search = function(){
       var queryLocation = $scope.location;
       var config = {
@@ -17,4 +31,6 @@ angular.module('nightclubApp')
         searchFactory.saveClubs($scope.clubs);
       });
     }
+    //$scope.unjoinClub todo
+    $scope.joinClub = searchFactory.joinClub;
 }]);

@@ -21,6 +21,34 @@ function respondWithResult(res, statusCode) {
   };
 }
 
+function addUserToJoined(userId){
+  return function(entity) {
+    var updated = entity.usersJoining.push(userId);
+    entity.markModified('usersJoining');
+  //  var updated = _.merge(entity, updates);
+    return entity.save()
+      .then(updated => {
+        return updated;
+      },err => {
+        console.error(err);
+      });
+  };
+}
+
+function removeUserFromJoined(userId){
+  return function(entity){
+    _.remove(entity.usersJoining,userId);//remove all the userIds matching .
+    entity.markModified('usersJoining');
+
+  return entity.save()
+    .then(updated => {
+      return updated;
+    },err => {
+      console.error(err);
+    });
+  };
+}
+
 function saveUpdates(updates) {
   return function(entity) {
     var updated = _.merge(entity, updates);
@@ -54,8 +82,10 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
+
   return function(err) {
     res.status(statusCode).send(err);
+    console.log(err);
   };
 }
 
@@ -63,7 +93,7 @@ function handleError(res, statusCode) {
 export function index(req, res) {
   return Club.find().exec()
     .then(respondWithResult(res))
-    .catch(handleError(res));
+    .catch(handleError(res)); //todo move yelp search code here!
 }
 
 // Gets a single Club from the DB
@@ -73,6 +103,7 @@ export function show(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
+
 
 // Creates a new Club in the DB
 export function create(req, res) {
@@ -91,6 +122,22 @@ export function update(req, res) {
     .then(saveUpdates(req.body))
     .then(respondWithResult(res))
     .catch(handleError(res));
+}
+
+export function join(req,res){
+  if (req.body._id) {
+    delete req.body._id;
+  }
+//  console.warn('user:',user);
+  return Club.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(addUserToJoined(req.user._id))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+export function unjoin(req,res){
+  console.log('todo implement!');
 }
 
 // Deletes a Club from the DB

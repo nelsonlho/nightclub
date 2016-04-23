@@ -3,9 +3,13 @@
 import mongoose from 'mongoose';
 
 var ClubSchema = new mongoose.Schema({
-  name: String,
+  id: String,
   info: String,
-  active: Boolean
+  active: Boolean,
+  usersJoining : [{
+    type : mongoose.Schema.Types.ObjectId,
+    ref : 'User'
+  }]
 });
 
 export default mongoose.model('Club', ClubSchema);

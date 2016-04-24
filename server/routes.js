@@ -41,11 +41,13 @@ export default function(app) {
         _.each(yelpClubs,function(yelpClub){
           var clubFound = _.find(clubsFound,{id : yelpClub.id});
           if(clubFound){
-            _.merge(yelpClub,clubFound); //add the data from database
+            yelpClub.usersJoining = clubFound.usersJoining;
+            //add the data from database
           }
 
         });
         // stitch the data together todo use lodash.
+
         res.json(yelpClubs);
       })
 

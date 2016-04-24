@@ -48,17 +48,20 @@
               <div>{{club.location.display_address[1]}}</div>
               <div>{{club.location.display_address[2]}}</div>
               <div>{{club.display_phone}}</div>
-              <div>
+          <!--    <div>
                 _id: {{club._id}}
                 usersJoining : {{club.usersJoining}}
-              </div>
-              <div ng-if="club.usersJoining">{{club.usersJoining.length}} Already Joined</div>
+              </div> !-->
+              <div><span ng-if="club.usersJoining">{{club.usersJoining.length}}</span>
+                   <span ng-if="!club.usersJoining">0</span>
+                Already Joined</div>
               <div ng-show="showButton(club)" ng-click="joinClub(club)">
                   <button type="button" class="btn btn-primary">Join</button>
               </div>
-              <div ng-show="!showButton(club)" ng-click="unjoinClub(club)">
+
+              <!--<div ng-show="!showButton(club)" ng-click="unjoinClub(club)">
                   <button type="button" class="btn btn-primary">Unjoin</button>
-              </div>
+              </div> -->
             </div>
 
             </div>

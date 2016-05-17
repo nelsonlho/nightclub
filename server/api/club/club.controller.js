@@ -23,7 +23,9 @@ function respondWithResult(res, statusCode) {
 
 function addUserToJoined(userId){
   return function(entity) {
+    console.log('before adding', entity, 'gonna add', userId);
     var updated = entity.usersJoining.push(userId);
+    console.log('after adding,', updated);
     entity.markModified('usersJoining');
   //  var updated = _.merge(entity, updates);
     return entity.save()
@@ -37,16 +39,31 @@ function addUserToJoined(userId){
 
 function removeUserFromJoined(userId){
   return function(entity){
-    _.remove(entity.usersJoining,userId);//remove all the userIds matching .
-    entity.markModified('usersJoining');
+    console.log('entity before remove',entity);
+    //console.log(entity.usersJoining[0] === userId);
+    //_.pullAll(entity.usersJoining,[userId]);//remove all the userIds matching .
+    //_.remove(collection,{age : 12})
+    //var updated = entity;
+    _.remove(entity.usersJoining,function(value){
+      console.log('comparing',value,userId,value==userId,value.toString()===userId.toString());
 
-  return entity.save()
-    .then(updated => {
-      return updated;
-    },err => {
-      console.error(err);
-    });
-  };
+      return value.toString() === userId.toString();
+    })
+
+    console.log('userId to remove',userId);
+    console.log('updated entity :',entity);
+    entity.markModified('usersJoining');
+    //if (entity) {
+      return entity.save()
+        .then((updated) => {
+          console.log('saved entity :',updated);
+          return updated;
+        },(err)=>{
+          console.error(err);
+        });
+    //}
+  }
+
 }
 
 function saveUpdates(updates) {
@@ -138,6 +155,15 @@ export function join(req,res){
 
 export function unjoin(req,res){
   console.log('todo implement!');
+  if (req.body._id) {
+    delete req.body._id;
+  }
+  console.warn('user:',req.user);
+  return Club.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(removeUserFromJoined(req.user._id))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
 }
 
 // Deletes a Club from the DB

@@ -7,16 +7,34 @@ angular.module('nightclubApp')
     $scope.location;
     $scope.clubs = searchFactory.getClubs();
 
-    $scope.showButton = function(club){
+    $scope.showJoinButton = function(club){
         if(!$scope.isLoggedIn){
           return false;
         }
-        if(!club.usersJoining){ return true; }
-        if(club.usersJoining.indexOf($scope.user._id) !== -1){//user joined already.
-          return false;
+
+        if(!club.usersJoining){
+          return true;
         }
 
+        if(club.usersJoining.indexOf($scope.user._id) === -1){//user joined already.
+          return true;
+        }
+
+        return false;
+    }
+
+    $scope.showUnjoinButton = function(club){
+      if(!$scope.isLoggedIn || !club.usersJoining){
+        return false;
+      }
+
+      if(club.usersJoining.indexOf($scope.user._id) !== -1){//user joined already.
         return true;
+      }
+      /*if(club.usersJoining && $scope.isLoggedIn)
+        return true;
+      else
+        return false;*/
     }
 
     $scope.search = function(){
@@ -31,6 +49,7 @@ angular.module('nightclubApp')
         searchFactory.saveClubs($scope.clubs);
       });
     }
-    //$scope.unjoinClub todo
+
     $scope.joinClub = searchFactory.joinClub;
+    $scope.unjoinClub = searchFactory.unjoinClub;
 }]);

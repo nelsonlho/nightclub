@@ -42,6 +42,11 @@ export default function(app) {
           var clubFound = _.find(clubsFound,{id : yelpClub.id});
           if(clubFound){
             yelpClub.usersJoining = clubFound.usersJoining;
+            yelpClub._id = clubFound._id;
+            yelpClub.info = clubFound.info;
+            yelpClub.active = clubFound.active;
+            //_.merge(yelpClub,clubFound);
+
             //add the data from database
           }
 

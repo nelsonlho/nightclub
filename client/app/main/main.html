@@ -55,13 +55,13 @@
               <div><span ng-if="club.usersJoining">{{club.usersJoining.length}}</span>
                    <span ng-if="!club.usersJoining">0</span>
                 Already Joined</div>
-              <div ng-show="showButton(club)" ng-click="joinClub(club)">
+              <div ng-show="showJoinButton(club)" ng-click="joinClub(club)">
                   <button type="button" class="btn btn-primary">Join</button>
               </div>
 
-              <!--<div ng-show="!showButton(club)" ng-click="unjoinClub(club)">
-                  <button type="button" class="btn btn-primary">Unjoin</button>
-              </div> -->
+              <div ng-show="showUnjoinButton(club)" ng-click="unjoinClub(club)">
+                  <button type="button" class="btn btn-danger">Unjoin</button>
+              </div>
             </div>
 
             </div>

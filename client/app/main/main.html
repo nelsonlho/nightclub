@@ -48,10 +48,6 @@
               <div>{{club.location.display_address[1]}}</div>
               <div>{{club.location.display_address[2]}}</div>
               <div>{{club.display_phone}}</div>
-          <!--    <div>
-                _id: {{club._id}}
-                usersJoining : {{club.usersJoining}}
-              </div> !-->
               <div><span ng-if="club.usersJoining">{{club.usersJoining.length}}</span>
                    <span ng-if="!club.usersJoining">0</span>
                 Already Joined</div>

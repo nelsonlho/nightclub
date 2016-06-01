@@ -2,6 +2,8 @@
 
 This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.5.0.
 
+The application uses Google Map API for address predictions and the Yelp API for clubs information.
+
 ## Getting Started
 
 ### Prerequisites
